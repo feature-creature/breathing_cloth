@@ -47,7 +47,7 @@ void ofApp::draw(){
             // rotate in the (opposite + 180) direction from the window center
             ofRotate(ofRadToDeg(angle) + 180);
             // translate sinusoidally from the direction of the window's center
-            ofTranslate(ofMap(sin(ofGetElapsedTimef() + ofMap(shapeDist,0,ofGetWidth(),TWO_PI,0)), -1, 1, 0, 45),0);
+            ofTranslate(ofMap(sin(ofGetElapsedTimef() + ofMap(shapeDist,0,ofGetWidth(),TWO_PI,0)), -1, 1, 0, 75),0);
 
             ofDrawCircle(0,0,4);
             ofPopMatrix();
@@ -57,7 +57,10 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    // save screenshot as png
+    if(key == 's'){
+        ofSaveScreen(ofToString(ofGetFrameNum())+".png");
+    }
 }
 
 //--------------------------------------------------------------

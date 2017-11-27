@@ -24,23 +24,30 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    // ghosting
+    ofPushStyle();
+    ofSetColor(0,10);
+    ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());
+    ofPopStyle();
+
     // center the shapes
     ofTranslate(spacingX/2,spacingY/2);
     for(int x = 0; x < numOfXTiles; x++)
     {
         for(int y = 0; y < numOfYTiles; y++)
         {
-            float locX = x*spacingX;
+            float locX = x*spacingX + spacingX/2;
             float locY = y*spacingY;
+
             float angle = atan2(ofGetHeight()/2 - locY,ofGetWidth()/2 - locX);
             float shapeDist = ofDist(ofGetWidth()/2,ofGetHeight()/2,locX,locY);
 
             ofPushMatrix();
             ofTranslate(locX,locY);
-            // rotate in the (opposite + 180) direction from the mouse
+            // rotate in the (opposite + 180) direction from the window center
             ofRotate(ofRadToDeg(angle) + 180);
-            // translate 100 from the direction of the window's center
-            ofTranslate(100,0);
+            // translate sinusoidally from the direction of the window's center
+            ofTranslate(ofMap(sin(ofGetElapsedTimef() + ofMap(shapeDist,0,ofGetWidth(),TWO_PI,0)), -1, 1, 0, 45),0);
 
             ofDrawCircle(0,0,4);
             ofPopMatrix();
